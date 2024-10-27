@@ -2,7 +2,9 @@ use std::path::Path;
 
 use clap::Parser;
 
+use actix_cors::Cors;
 use actix_files as fs;
+
 use actix_web::{
     middleware::{self, DefaultHeaders},
     web,
@@ -50,10 +52,17 @@ async fn main() -> std::io::Result<()> {
         let opts: Opts = opts.clone();
         let frontend_folder = opts.frontend_folder.clone();
 
+        let cors = Cors::default()
+            .allow_any_origin()
+            .allowed_methods(vec!["GET", "POST", "OPTIONS", "PUT", "DELETE"])
+            .allowed_headers(vec!["Content-Type", "Authorization"])
+            .max_age(3600);
+
         let mut app = App::new()
             .service(web::resource("/health").to(health))
             // Enable GZIP compression
             .wrap(middleware::Compress::default())
+            .wrap(cors)
             .wrap(
                 DefaultHeaders::new()
                     .add(("Cross-Origin-Opener-Policy", "same-origin"))
