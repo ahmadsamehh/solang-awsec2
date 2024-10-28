@@ -168,7 +168,7 @@ export default class App {
           // FIXME: This should be configurable
           // { compileUrl: "http://3.86.209.156:9000/compile" },
           // { compileUrl: "http://hypersolang.ddnsfree.com:9000/compile" },
-          { compileUrl: "https://hypersolang.ddnsfree.com:9000/compile" },
+          { compileUrl: "https://hypersolang.ddnsfree.com/compile" },
           { source: code }
         );
 
